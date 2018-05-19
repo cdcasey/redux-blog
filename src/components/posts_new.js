@@ -3,30 +3,36 @@ import { Field, reduxForm } from 'redux-form';
 
 class PostsNew extends Component {
     renderField(field) {
-        console.log(field);
-
+        const { meta: { touched, error} } = field;
+        const divClass = `form-group ${touched && error ? "has-danger" : ""}`;
         return (
-            <div className="form-group">
+            <div className={divClass}>
                 <label>{field.label}</label>
                 <input
                     className="form-control"
                     type="text"
                     {...field.input}
                 />
-                {field.meta.touched ? field.meta.error : ''}
+                <div className="text-help">
+                    <em>{touched ? error : ''}</em>
+                </div>
             </div>
         )
     }
 
     renderBody(field) {
+        const { meta: { touched, error} } = field;
+        const divClass = `form-group ${touched && error ? "has-danger" : ""}`;
         return (
-            <div className="form-group">
+            <div className={divClass}>
                 <label>{field.label}</label>
                 <textarea
                     className="form-control"
                     {...field.input}
                 />
-                {field.meta.touched ? field.meta.error : ''}
+                <div className="text-help">
+                    <em>{touched ? error : ''}</em>
+                </div>
             </div>
         )
     }
@@ -48,17 +54,17 @@ class PostsNew extends Component {
                         label="Title"
                         name="title"
                         component={this.renderField}
-                        />
+                    />
                     <Field
                         label="Categories"
                         name="categories"
                         component={this.renderField}
-                        />
+                    />
                     <Field
                         label="Content for Post"
                         name="content"
                         component={this.renderBody}
-                        />
+                    />
                     <button type="submit" className="btn btn-primary">Submit</button>
                 </form>
             </div>
