@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import { Field, reduxForm } from 'redux-form';
+import { Link } from 'react-router-dom';
 
 class PostsNew extends Component {
     renderField(field) {
-        const { meta: { touched, error} } = field;
+        const { meta: { touched, error } } = field;
         const divClass = `form-group ${touched && error ? "has-danger" : ""}`;
         return (
             <div className={divClass}>
@@ -21,7 +22,7 @@ class PostsNew extends Component {
     }
 
     renderBody(field) {
-        const { meta: { touched, error} } = field;
+        const { meta: { touched, error } } = field;
         const divClass = `form-group ${touched && error ? "has-danger" : ""}`;
         return (
             <div className={divClass}>
@@ -66,6 +67,7 @@ class PostsNew extends Component {
                         component={this.renderBody}
                     />
                     <button type="submit" className="btn btn-primary">Submit</button>
+                    <Link to="/" className="btn btn-danger">Cancel</Link>
                 </form>
             </div>
         );
