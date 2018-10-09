@@ -7,7 +7,7 @@ import { createPost } from '../actions';
 class PostsNew extends Component {
     renderField(field) {
         const { meta: { touched, error } } = field;
-        const divClass = `form-group ${touched && error ? "has-danger" : ""}`;
+        const divClass = `form-group ${touched && error ? 'has-danger' : ''}`;
         return (
             <div className={divClass}>
                 <label>{field.label}</label>
@@ -20,12 +20,12 @@ class PostsNew extends Component {
                     <em>{touched ? error : ''}</em>
                 </div>
             </div>
-        )
+        );
     }
 
     renderBody(field) {
         const { meta: { touched, error } } = field;
-        const divClass = `form-group ${touched && error ? "has-danger" : ""}`;
+        const divClass = `form-group ${touched && error ? 'has-danger' : ''}`;
         return (
             <div className={divClass}>
                 <label>{field.label}</label>
@@ -37,7 +37,7 @@ class PostsNew extends Component {
                     <em>{touched ? error : ''}</em>
                 </div>
             </div>
-        )
+        );
     }
 
     onSubmit(values) {
@@ -47,7 +47,6 @@ class PostsNew extends Component {
     }
 
     render() {
-
         const { handleSubmit } = this.props;
 
         return (
@@ -81,20 +80,18 @@ function validate(values) {
 
     const errors = {};
     if (!values.title) {
-        errors.title = "Please enter a title"
+        errors.title = 'Please enter a title';
     }
     if (!values.categories) {
-        errors.categories = "Please enter at least one category"
+        errors.categories = 'Please enter at least one category';
     }
     if (!values.content) {
-        errors.content = "Please enter a post body"
+        errors.content = 'Please enter a post body';
     }
     return errors;
 }
 
 export default reduxForm({
     validate,
-    form: 'PostsNewForm'
-})(
-    connect(null, { createPost })(PostsNew)
-);
+    form: 'PostsNewForm',
+})(connect(null, { createPost })(PostsNew), );

@@ -8,7 +8,7 @@ import promise from 'redux-promise';
 import reducers from './reducers';
 import PostIndex from './components/post_index';
 import PostsNew from './components/posts_new';
-import PostsShow from './components/posts_show'
+import PostsShow from './components/posts_show';
 
 const createStoreWithMiddleware = applyMiddleware(promise)(createStore);
 
@@ -24,4 +24,5 @@ ReactDOM.render(
       </div>
     </BrowserRouter>
   </Provider>
-  , document.querySelector('.container'));
+  , document.querySelector('.container'),
+);
