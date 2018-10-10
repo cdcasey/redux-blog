@@ -22,7 +22,7 @@ class PostsIndex extends React.Component {
     render() {
         return (
             <div>
-                <div className="text-xs-right">
+                <div className="text-right">
                     <Link className="btn btn-primary" to="/posts/new">
                         Add a Post
                     </Link>
