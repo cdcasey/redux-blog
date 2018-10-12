@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { fetchPost } from '../actions';
+import { fetchPost, deletePost } from '../actions';
 
 // A user could bookmark the show page, so this component
 // needs to fetch its own data
@@ -15,6 +15,14 @@ class PostsShow extends React.Component {
         }
     }
 
+    onDeleteClick(event) {
+        const { id } = this.props.match.params;
+        // Could use this.props.post.id, but that would assume the post has been fetched
+        this.props.deletePost(id, () => {
+            this.props.history.push('/');
+        });
+    }
+
     render() {
         const { post } = this.props;
 
@@ -25,6 +33,12 @@ class PostsShow extends React.Component {
         return (
             <div>
                 <Link to="/">Back to index</Link>
+                <button
+                    className="btn btn-danger float-right"
+                    onClick={this.onDeleteClick.bind(this)}
+                >
+                    Delete Post
+                </button>
                 <h3>{post.title}</h3>
                 <h6>Categories: {post.categories}</h6>
                 <p>{post.content}</p>
@@ -44,5 +58,5 @@ function mapStateToProps({ posts }, ownProps) {
 
 export default connect(
     mapStateToProps,
-    { fetchPost }
+    { fetchPost, deletePost }
 )(PostsShow);
