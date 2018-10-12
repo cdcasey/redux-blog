@@ -7,9 +7,12 @@ import { fetchPost } from '../actions';
 // needs to fetch its own data
 class PostsShow extends React.Component {
     componentDidMount() {
-        // Match is a prop provided by react-router
-        const { id } = this.props.match.params;
-        this.props.fetchPost(id).catch(console.error);
+        // if forces use of existing state data if user comes from index page
+        if (!this.props.post) {
+            // Match is a prop provided by react-router
+            const { id } = this.props.match.params;
+            this.props.fetchPost(id).catch(console.error);
+        }
     }
 
     render() {
