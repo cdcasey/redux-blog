@@ -1,28 +1,49 @@
 import React from 'react';
 import { Field, reduxForm } from 'redux-form';
+import { Link } from 'react-router-dom';
 
 class PostsNew extends React.Component {
     // field arg passes event handlers from Field component
     // Spread syntax saves us from things line onChange={field.input.onChange}
     renderField(field) {
+        const {
+            meta: { touched, error }
+        } = field;
+
+        const className = `form-control ${
+            touched && error ? 'is-invalid' : ''
+        }`;
+
         const formField =
             field.input.name === 'content' ? (
-                <textarea rows="4" className="form-control" {...field.input} />
+                <textarea rows="4" className={className} {...field.input} />
             ) : (
-                <input className="form-control" type="text" {...field.input} />
+                <input className={className} type="text" {...field.input} />
             );
+
         return (
             <div className="form-group">
                 <label>{field.label}</label>
                 {formField}
+                <div className="text-danger">
+                    <em>{touched ? error : ''}</em>
+                </div>
             </div>
         );
     }
 
+    onSubmit(values) {
+        console.log(values);
+    }
+
     // Field's component prop tells Field what to look like
     render() {
+        // handleSubmit gets added to the props by ReduxForm
+        const { handleSubmit } = this.props;
+
         return (
-            <form>
+            // ReduxForm does a check before letting our callback run
+            <form onSubmit={handleSubmit(this.onSubmit.bind(this))}>
                 <Field
                     label="Title"
                     name="title"
@@ -38,11 +59,18 @@ class PostsNew extends React.Component {
                     name="content"
                     component={this.renderField}
                 />
+                <button type="submit" className="btn btn-primary">
+                    Submit
+                </button>
+                <Link to="/" className="btn btn-danger">
+                    Cancel
+                </Link>
             </form>
         );
     }
 }
 
+// Properties should be the same name as the name property of the field they're validating
 function validate(values) {
     const errors = {};
 
