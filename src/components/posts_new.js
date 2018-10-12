@@ -1,6 +1,9 @@
 import React from 'react';
 import { Field, reduxForm } from 'redux-form';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+
+import { createPost } from '../actions';
 
 class PostsNew extends React.Component {
     // field arg passes event handlers from Field component
@@ -33,7 +36,10 @@ class PostsNew extends React.Component {
     }
 
     onSubmit(values) {
-        console.log(values);
+        // history is a prop pushed through by react-router
+        this.props.createPost(values, () => {
+            this.props.history.push('/');
+        });
     }
 
     // Field's component prop tells Field what to look like
@@ -91,7 +97,14 @@ function validate(values) {
 // form property is name of the form and should be unique in case
 // that there are multiple forms on screen at the same time (so this
 // form won't share state with other forms)
+
+// Connect returns a React component so is a valid input into the ReduxForm helper
 export default reduxForm({
     validate,
     form: 'PostsNewForm'
-})(PostsNew);
+})(
+    connect(
+        null,
+        { createPost }
+    )(PostsNew)
+);
